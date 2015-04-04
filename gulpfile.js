@@ -9,6 +9,7 @@ var gulp = require('gulp')
     , jshint = require('gulp-jshint')
     , streamify = require('gulp-streamify')
     , uglify = require('gulp-uglify')
+    , less = require('gulp-less')
     , connect = require('gulp-connect')
     , source = require('vinyl-source-stream')
     , browserify = require('browserify')
@@ -23,7 +24,7 @@ var watching = false;
 
 paths = {
   assets: 'src/assets/**/*',
-  css:    'src/css/*.css',
+  less:    'src/less/*.less',
   libs:   [
     './src/bower_components/phaser-official/build/phaser.js'
   ],
@@ -51,7 +52,7 @@ gulp.task('copylibs', ['clean'], function () {
       .on('error', gutil.log);
 });
 
-gulp.task('compile', ['clean'], function () {
+gulp.task('compilejs', ['clean'], function () {
   var bundler = browserify({
     cache: {}, packageCache: {}, fullPaths: true,
     entries: [paths.entry],
@@ -79,8 +80,10 @@ gulp.task('compile', ['clean'], function () {
   return bundlee();
 });
 
-gulp.task('minifycss', ['clean'], function () {
-  gulp.src(paths.css)
+gulp.task('compileless', ['clean'], function () {
+  gulp.src(paths.less)
+      .pipe(less())
+      .pipe(concat('main.css'))
       .pipe(gulpif(!watching, minifycss({
         keepSpecialComments: false,
         removeEmpty: true
@@ -124,4 +127,4 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['connect', 'watch', 'build']);
-gulp.task('build', ['clean', 'copy', 'copylibs', 'compile', 'minifycss', 'processhtml', 'minifyhtml']);
+gulp.task('build', ['clean', 'copy', 'copylibs', 'compilejs', 'compileless', 'processhtml', 'minifyhtml']);

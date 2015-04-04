@@ -1,23 +1,23 @@
 var gulp = require('gulp')
-  , gutil = require('gulp-util')
-  , del = require('del')
-  , concat = require('gulp-concat')
-  , rename = require('gulp-rename')
-  , minifycss = require('gulp-minify-css')
-  , minifyhtml = require('gulp-minify-html')
-  , processhtml = require('gulp-processhtml')
-  , jshint = require('gulp-jshint')
-  , streamify = require('gulp-streamify')
-  , uglify = require('gulp-uglify')
-  , connect = require('gulp-connect')
-  , source = require('vinyl-source-stream')
-  , browserify = require('browserify')
-  , babelify = require('babelify')
-  , errorify = require('errorify')
-  , watchify = require('watchify')
-  , gulpif = require('gulp-if')
-  , vinylPaths = require('vinyl-paths')
-  , paths;
+    , gutil = require('gulp-util')
+    , del = require('del')
+    , concat = require('gulp-concat')
+    , rename = require('gulp-rename')
+    , minifycss = require('gulp-minify-css')
+    , minifyhtml = require('gulp-minify-html')
+    , processhtml = require('gulp-processhtml')
+    , jshint = require('gulp-jshint')
+    , streamify = require('gulp-streamify')
+    , uglify = require('gulp-uglify')
+    , connect = require('gulp-connect')
+    , source = require('vinyl-source-stream')
+    , browserify = require('browserify')
+    , babelify = require('babelify')
+    , errorify = require('errorify')
+    , watchify = require('watchify')
+    , gulpif = require('gulp-if')
+    , vinylPaths = require('vinyl-paths')
+    , paths;
 
 var watching = false;
 
@@ -33,22 +33,22 @@ paths = {
 };
 
 gulp.task('clean', function () {
-	return gulp.src(paths.dist)
-    .pipe(vinylPaths(del))
-    .on('error', gutil.log);
+  return gulp.src(paths.dist)
+      .pipe(vinylPaths(del))
+      .on('error', gutil.log);
 });
 
 gulp.task('copy', ['clean'], function () {
   gulp.src(paths.assets)
-    .pipe(gulp.dest(paths.dist + 'assets'))
-    .on('error', gutil.log);
+      .pipe(gulp.dest(paths.dist + 'assets'))
+      .on('error', gutil.log);
 });
 
 gulp.task('copylibs', ['clean'], function () {
   gulp.src(paths.libs)
-    .pipe(gulpif(!watching, uglify({outSourceMaps: false})))
-    .pipe(gulp.dest(paths.dist + 'js/lib'))
-    .on('error', gutil.log);
+      .pipe(gulpif(!watching, uglify({outSourceMaps: false})))
+      .pipe(gulp.dest(paths.dist + 'js/lib'))
+      .on('error', gutil.log);
 });
 
 gulp.task('compile', ['clean'], function () {
@@ -56,19 +56,19 @@ gulp.task('compile', ['clean'], function () {
     cache: {}, packageCache: {}, fullPaths: true,
     entries: [paths.entry],
     debug: watching
-    })
+  })
       .transform(babelify);
   if(watching) bundler.plugin(errorify);
 
   var bundlee = function() {
     return bundler
-      .bundle()
-      .pipe(source('main.min.js'))
-      .pipe(jshint('.jshintrc'))
-      .pipe(jshint.reporter('default'))
-      .pipe(gulpif(!watching, streamify(uglify({outSourceMaps: false}))))
-      .pipe(gulp.dest(paths.dist))
-      .on('error', gutil.log);
+        .bundle()
+        .pipe(source('main.min.js'))
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('default'))
+        .pipe(gulpif(!watching, streamify(uglify({outSourceMaps: false}))))
+        .pipe(gulp.dest(paths.dist))
+        .on('error', gutil.log);
   };
 
   if (watching) {
@@ -80,34 +80,34 @@ gulp.task('compile', ['clean'], function () {
 });
 
 gulp.task('minifycss', ['clean'], function () {
- gulp.src(paths.css)
-    .pipe(gulpif(!watching, minifycss({
-      keepSpecialComments: false,
-      removeEmpty: true
-    })))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest(paths.dist))
-    .on('error', gutil.log);
+  gulp.src(paths.css)
+      .pipe(gulpif(!watching, minifycss({
+        keepSpecialComments: false,
+        removeEmpty: true
+      })))
+      .pipe(rename({suffix: '.min'}))
+      .pipe(gulp.dest(paths.dist))
+      .on('error', gutil.log);
 });
 
 gulp.task('processhtml', ['clean'], function() {
   return gulp.src('src/index.html')
-    .pipe(processhtml())
-    .pipe(gulp.dest(paths.dist))
-    .on('error', gutil.log);
+      .pipe(processhtml())
+      .pipe(gulp.dest(paths.dist))
+      .on('error', gutil.log);
 });
 
 gulp.task('minifyhtml', ['processhtml'], function() {
   gulp.src('dist/index.html')
-    .pipe(gulpif(!watching, minifyhtml()))
-    .pipe(gulp.dest(paths.dist))
-    .on('error', gutil.log);
+      .pipe(gulpif(!watching, minifyhtml()))
+      .pipe(gulp.dest(paths.dist))
+      .on('error', gutil.log);
 });
 
 gulp.task('html', ['build'], function(){
   gulp.src('dist/*.html')
-    .pipe(connect.reload())
-    .on('error', gutil.log);
+      .pipe(connect.reload())
+      .on('error', gutil.log);
 });
 
 gulp.task('connect', function () {

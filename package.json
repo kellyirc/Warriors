@@ -16,6 +16,7 @@
     "gulp-download": "*",
     "gulp-if": "*",
     "gulp-jshint": "*",
+    "gulp-less": "^3.0.2",
     "gulp-minify-css": "*",
     "gulp-minify-html": "*",
     "gulp-processhtml": "*",

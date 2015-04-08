@@ -19,6 +19,7 @@ var gulp = require('gulp')
     , watchify = require('watchify')
     , gulpif = require('gulp-if')
     , vinylPaths = require('vinyl-paths')
+    , open = require('gulp-open')
     , paths;
 
 var watching = false;
@@ -121,11 +122,18 @@ gulp.task('connect', function () {
     });
 });
 
+gulp.task('open', function() {
+    gulp.src('./dist/index.html')
+        .pipe(open('', {
+            url: 'http://localhost:8000'
+        }));
+});
+
 gulp.task('watch', function () {
     watching = true;
     return gulp.watch([paths.less, paths.jade, paths.js], ['build', 'html']);
 });
 
-gulp.task('default', ['connect', 'watch', 'build']);
+gulp.task('default', ['connect', 'open', 'watch', 'build']);
 gulp.task('build', ['clean', 'copy', 'copylibs', 'compile']);
 gulp.task('compile', ['compilejs', 'compileless', 'compilejade'])

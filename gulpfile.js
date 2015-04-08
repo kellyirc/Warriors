@@ -68,7 +68,10 @@ gulp.task('compilejs', ['clean'], function () {
         debug: watching
     })
         .transform(babelify);
-    if(watching) bundler.plugin(errorify);
+        
+    if(watching) {
+        bundler.plugin(errorify);
+    }
 
     var bundlee = function() {
         return bundler
@@ -83,7 +86,7 @@ gulp.task('compilejs', ['clean'], function () {
 
     if (watching) {
         bundler = watchify(bundler);
-        bundler.on('update', bundlee)
+        bundler.on('update', bundlee);
     }
 
     return bundlee();
@@ -142,4 +145,4 @@ gulp.task('watch', function () {
 
 gulp.task('default', ['connect', 'open', 'watch', 'build']);
 gulp.task('build', ['clean', 'copy', 'copylibs', 'compile']);
-gulp.task('compile', ['compilejs', 'compileless', 'compilejade'])
+gulp.task('compile', ['compilejs', 'compileless', 'compilejade']);

@@ -38,6 +38,8 @@
     "build": "node ./node_modules/gulp/bin/gulp.js build"
   },
   "dependencies": {
-    "gulp-open": "~0.3.2"
+    "gulp-open": "~0.3.2",
+    "gulp-imagemin": "~2.2.1",
+    "imagemin-pngquant": "~4.0.0"
   }
 }

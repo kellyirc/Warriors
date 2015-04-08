@@ -20,6 +20,8 @@ var gulp = require('gulp')
     , gulpif = require('gulp-if')
     , vinylPaths = require('vinyl-paths')
     , open = require('gulp-open')
+    , imagemin = require('gulp-imagemin')
+    , pngquant = require('imagemin-pngquant')
     , paths;
 
 var watching = false;
@@ -44,6 +46,10 @@ gulp.task('clean', function () {
 
 gulp.task('copy', ['clean'], function () {
     gulp.src(paths.assets)
+        .pipe(imagemin({
+            optimizationLevel: 4,
+            use: [pngquant()]
+        }))
         .pipe(gulp.dest(paths.dist + 'assets'))
         .on('error', gutil.log);
 });

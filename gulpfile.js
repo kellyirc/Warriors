@@ -30,10 +30,11 @@ paths = {
     assets: 'src/assets/**/*',
     less:    'src/less/*.less',
     libs: [
-        './src/bower_components/phaser-official/build/phaser.js'
+        './src/bower_components/phaser-official/build/phaser.js',
+        './src/bower_components/chance/bin/chance.js'
     ],
-    jade: ['src/index.jade', 'src/tmpl/*.jade', 'src/tmpl/**/*.jade'],
-    js: ['src/js/*.js', 'src/js/**/*.js'],
+    jade: ['src/index.jade', 'src/tmpl/**/*.jade'],
+    js: ['src/js/**/*.js'],
     entry: './src/js/main.js',
     dist: './dist/'
 };

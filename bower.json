@@ -5,6 +5,7 @@
     ""
   ],
   "dependencies": {
-    "phaser-official": "latest"
+    "phaser-official": "latest",
+    "chance": "~0.7.3"
   }
 }

@@ -1,4 +1,4 @@
-var Preloader = function (game) {
+var Preloader = function () {
   this.asset = null;
   this.ready = false;
 };

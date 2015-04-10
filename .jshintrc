@@ -4,6 +4,7 @@
   "camelcase": true,
   "curly": true,
   "eqeqeq": true,
+  "freeze": true,
   "forin": true,
   "immed": true,
   "latedef": true,
@@ -17,9 +18,13 @@
   "trailing": true,
   "browser": true,
   "sub": true,
+  "strict": false,
   "debug": true,
   "globals": {
     "Phaser": false,
-    "Chance": false
+    "Chance": false,
+    "require": false,
+    "module": false,
+    "_": false
   }
 }

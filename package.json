@@ -30,16 +30,15 @@
     "tiny-lr": "*",
     "vinyl-paths": "*",
     "vinyl-source-stream": "*",
-    "watchify": "*"
+    "watchify": "*",
+    "gulp-open": "~0.3.2",
+    "gulp-imagemin": "~2.2.1",
+    "imagemin-pngquant": "~4.0.0",
+    "gulp-jscs": "~1.5.1"
   },
   "scripts": {
     "post-install": "node ./node_modules/bower/bin/bower install",
     "start": "node ./node_modules/gulp/bin/gulp.js",
     "build": "node ./node_modules/gulp/bin/gulp.js build"
-  },
-  "dependencies": {
-    "gulp-open": "~0.3.2",
-    "gulp-imagemin": "~2.2.1",
-    "imagemin-pngquant": "~4.0.0"
   }
 }

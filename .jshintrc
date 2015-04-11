@@ -12,6 +12,7 @@
   "noarg": true,
   "nonew": false,
   "quotmark": "single",
+  "esnext": true,
   "undef": true,
   "unused": true,
   "devel": true,

@@ -10,5 +10,6 @@
   "requireSpaceBeforeObjectValues": true,
   "requireSpaceBetweenArguments": true,
   "requireSpacesInForStatement": true,
-  "validateQuoteMarks": "'"
+  "validateQuoteMarks": "'",
+  "esnext": true
 }

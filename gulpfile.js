@@ -59,14 +59,13 @@ gulp.task('copyassets', ['clean'], function () {
 
 gulp.task('copylibs', ['clean'], function () {
     gulp.src(paths.libs)
-        .pipe(uglify())
-        //.pipe(gulpif(!watching, uglify({outSourceMaps: false})))
+        .pipe(gulpif(!watching, uglify({outSourceMaps: false})))
         .pipe(concat('lib.js'))
         .pipe(gulp.dest(paths.dist + 'js'))
         .on('error', gutil.log);
 });
 
-gulp.task('compilejs', ['jscs', 'jshint', 'clean'], function () {
+gulp.task('compilejs', ['jscs', 'clean'], function () {
     var bundler = browserify({
         cache: {}, packageCache: {}, fullPaths: true,
         entries: [paths.entry],
@@ -82,6 +81,8 @@ gulp.task('compilejs', ['jscs', 'jshint', 'clean'], function () {
         return bundler
             .bundle()
             .pipe(source('js/main.min.js'))
+            .pipe(jshint('.jshintrc'))
+            .pipe(jshint.reporter('default'))
             .pipe(gulpif(!watching, streamify(uglify({outSourceMaps: false}))))
             .pipe(gulp.dest(paths.dist))
             .on('error', gutil.log);
@@ -97,14 +98,7 @@ gulp.task('compilejs', ['jscs', 'jshint', 'clean'], function () {
 
 gulp.task('jscs', function() {
     gulp.src(paths.js)
-        .pipe(jscs(require('./.jscs.json')))//could not get it to work as .jscsrc -- workaround
-        .on('error', gutil.log);
-});
-
-gulp.task('jshint', function() {
-    gulp.src(paths.js)
-        .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter('default'))
+        .pipe(jscs())
         .on('error', gutil.log);
 });
 

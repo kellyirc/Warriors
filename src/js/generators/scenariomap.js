@@ -6,7 +6,7 @@ var ScenarioMap = function(options) {
 
   var terrain = {
     floor: 3,
-    wall: 207,
+    wall: 4,
     keep: 5,
     treasure: 6
   };
